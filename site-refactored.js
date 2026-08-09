@@ -1,4 +1,12 @@
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('.policy details').forEach(details=>{
+  const measures=document.createElement('div');
+  measures.className='measures';
+  const heading=document.createElement('h4');
+  heading.textContent=details.querySelector('summary').textContent;
+  measures.append(heading,...[...details.children].filter(child=>child.tagName!=='SUMMARY'));
+  details.replaceWith(measures);
+});
 const sections=[...document.querySelectorAll('main>section[data-menu]')];
 const nav=document.createElement('nav');
 nav.className='sheet-nav';
@@ -18,10 +26,28 @@ const links=sections.map((section,index)=>{
 });
 document.body.append(nav);
 
+const pageTurn=document.createElement('div');
+pageTurn.className='page-turn';
+pageTurn.setAttribute('aria-hidden','true');
+pageTurn.innerHTML='<strong></strong>';
+document.body.append(pageTurn);
+
 if(!reducedMotion)document.documentElement.classList.add('motion-ready');
 let furthest=0;
+let currentIndex=0;
 
 const setCurrent=index=>{
+  if(index!==currentIndex&&!reducedMotion){
+    const color=getComputedStyle(sections[index]).backgroundColor;
+    pageTurn.style.setProperty('--turn-color',color);
+    const rgb=(color.match(/\d+/g)||[255,255,255]).map(Number);
+    pageTurn.style.setProperty('--turn-ink',(rgb[0]*299+rgb[1]*587+rgb[2]*114)/1000<145?'#ffffff':'#071d3f');
+    pageTurn.querySelector('strong').textContent=sections[index].dataset.menu;
+    pageTurn.classList.remove('run');
+    void pageTurn.offsetWidth;
+    pageTurn.classList.add('run');
+  }
+  currentIndex=index;
   furthest=Math.max(furthest,index);
   sections[index].classList.add('has-entered');
   links.forEach((link,linkIndex)=>{

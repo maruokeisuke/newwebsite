@@ -7,9 +7,9 @@
 .hero{background:transparent}
 .hero-copy{position:absolute;left:20px;right:52px;bottom:96px;max-width:340px}
 .hero-copy::before{display:none}
-.hero h1{font-size:clamp(44px,12vw,56px)}
+.hero h1{position:relative;isolation:isolate;font-size:clamp(44px,12vw,56px)}
 .hero h1 strong::after{display:none}
-.hero h1 strong>span{position:relative;z-index:2}
+.hero h1 small,.hero h1 strong>span,.hero-ending{position:relative;z-index:2}
 .hero-circle{left:50%;top:50%;bottom:auto;width:94%;height:auto;aspect-ratio:1;opacity:.48;overflow:visible;transform:translate(-50%,-50%);pointer-events:none}
 .hero-circle .brush-path{fill:none;stroke:#ffd800;stroke-width:78;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:url(#brush-rough);animation:circle-write 1.8s .2s cubic-bezier(.22,.72,.18,1) forwards}
 @keyframes circle-write{to{stroke-dashoffset:.06}}

@@ -45,7 +45,7 @@ export function Hero() {
               <path className="brush-path" pathLength="1" d="M250 470 A220 220 0 1 1 250 30 A220 220 0 1 1 250 470" />
             </svg>
           </strong>
-          {heroContent.ending}
+          <span className="hero-ending">{heroContent.ending}</span>
         </h1>
       </div>
     </section>
